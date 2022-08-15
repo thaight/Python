@@ -20,11 +20,11 @@ def sample_prefix_grabber(sample_list):
                         #Returns the sample prefix as an array
                         return(sample_data)
 
+#SRA_download takes the sample prefixes and calls SRA toolkit to download the files
 def SRA_download(sample_data,sample_type):
-        if sample_type == "SRA":
-                for X in sample_data:
-                        rc = subprocess.call(["./SRA_download.sh", X])
-                        #subprocess.call(["./SRA_download.sh",X])
+        for X in sample_data:
+                rc = subprocess.call(["./SRA_download.sh", X])
+                #subprocess.call(["./SRA_download.sh",X])
 
         return()
 
@@ -34,4 +34,7 @@ def SRA_download(sample_data,sample_type):
 
 sample_type = "SRA"
 sample_data = sample_prefix_grabber("/home/thaight/projects/rrg-zovoilis/thaight/total_circRNA_pipeline_v1/temp.list")
-SRA_download(sample_data,sample_type)
+if sample_type == "SRA":
+        sra_download(sample_data)
+
+
