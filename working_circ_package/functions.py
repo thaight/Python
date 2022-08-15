@@ -35,6 +35,6 @@ def SRA_download(sample_data,sample_type):
 sample_type = "SRA"
 sample_data = sample_prefix_grabber("/home/thaight/projects/rrg-zovoilis/thaight/total_circRNA_pipeline_v1/temp.list")
 if sample_type == "SRA":
-        sra_download(sample_data)
+        SRA_download(sample_data)
 
 
