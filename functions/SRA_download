@@ -1,0 +1,9 @@
+def SRA_download(sample_data,sample_type,):
+    """Use: Download SRA files """
+    if sample_type == "SRA":
+        for X in sample_data:
+            command = "sbatch ./SRA-download_" + X + ".sh"
+            print(command)
+            subprocess.run([sys.executable, command, X])
+                           
+        return()
