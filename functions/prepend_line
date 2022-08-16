@@ -1,0 +1,22 @@
+import os.path
+import sys
+import subprocess
+
+def prepend_line(file_name, line, prefix):
+    """ Use: Insert a given line to the top of a file for submission to slurm schedulers """
+    # Define name of temporary dummy file for every prefix
+    for ID in prefix:
+        temp_file = file_name + "_" + ID + ".sh"
+        # Open original file in read mode and temp file in write mode
+        with open(file_name, 'r') as read_obj, open(temp_file, 'w') as write_obj:
+            # Write shebang line to temp file
+            write_obj.write("#!/bin/bash" + '\n')
+            write_obj.write("#SBATCH --job-name=" + ID + "_SRA_download" + '\n')
+            for X in line:
+                # Write run time parameteres for each element of line
+                write_obj.write("#SBATCH " + X + '\n')
+                # Write a new line for seperation
+            write_obj.write('\n')
+            # Read lines from original file one by one and append them to the temp file
+            for line in read_obj:
+                write_obj.write(line)   
