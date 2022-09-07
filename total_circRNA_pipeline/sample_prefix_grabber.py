@@ -1,0 +1,14 @@
+def sample_prefix_grabber(sample_list):
+    """ Use: Obtain list of sample prefixes for downstream use """
+    #Check that the SRA_list path exists
+    if os.path.exists(sample_list) == False:
+        sys.exit("Please review the manual")
+    else:
+        #Open SRA_list file to obtain the SRA prefix for download
+        with open(sample_list, 'r') as sample_file:
+            sample_data = []
+            for line in sample_file:
+                content_check = line.rstrip().split()
+                sample_data.append(content_check[0])
+            #Returns the sample prefix as an array
+            return(sample_data)
