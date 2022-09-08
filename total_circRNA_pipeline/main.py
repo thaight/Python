@@ -4,7 +4,7 @@ import os.path
 import sys
 import subprocess
 import os
-import logging
+import argparse
 
 
 def sample_prefix_grabber(sample_list):
@@ -22,38 +22,29 @@ def sample_prefix_grabber(sample_list):
             #Returns the sample prefix as an array
             return(sample_data)
 
-def SRA_download(sample_data,sample_type,SRApath):
+def SRA_download(sample_data,INpath,OUTpath):
     """ Use: Download SRA files """
-    if sample_type == "SRA":
-        script_dir = SRApath + "SRA-download_"
-        for X in sample_data:
-            command = script_dir + X + ".sh"
-            subprocess.run([command, X, SRApath])
-    else:
-        print ("No Files to Download")
-        return()
+    script_dir = INpath + "SRA-download_"
+    for X in sample_data:
+        command = script_dir + X + ".sh"
+        subprocess.run([command, X, INpath, OUTpath])
+    return()
 
-def prepend_line(line, prefix, version, path):
+def prepend_line(line, prefix, version, path, use):
     """ Use: Insert a given line to the top of a file for submission to slurm schedulers """
-    # Define name of temporary dummy file for every prefix
-    for ID in prefix:
-        file_name = path + "SRA-download" #NEED TO FIX THIS SO THAT YOU PARSE A VARIAB>
+    for ID in prefix: # Define name of temporary dummy file for every prefix
+        file_name = path
         temp_file = file_name + "_" + ID + ".sh"
-        # Open original file in read mode and temp file in write mode
-        with open(file_name, 'r') as read_obj, open(temp_file, 'w') as write_obj:
-            # Write shebang line to temp file
-            write_obj.write("#!/bin/bash" + '\n')
-            write_obj.write("#SBATCH --job-name=" + ID + "_SRA_download" + '\n')
+        with open(file_name, 'r') as read_obj, open(temp_file, 'w') as write_obj: # Open original file in read mode and temp file in write mode
+            write_obj.write("#!/bin/bash" + '\n') # Write shebang line to temp file
+            write_obj.write("#SBATCH --job-name=" + ID + use + '\n')
             for X in line:
-                # Write run time parameteres for each element of line
-                write_obj.write("#SBATCH " + X + '\n')
-            # Write in module load information needed
-            write_obj.write("#module load " + version + '\n')
-            # Read lines from original file one by one and append them to the temp file
-            for obj in read_obj:
+                write_obj.write("#SBATCH " + X + '\n') # Write run time parameteres for each element of line
+            for Y in version:
+                write_obj.write("#module load " + Y + '\n') # Write in module load information needed         
+            for obj in read_obj: # Read lines from original file one by one and append them to the temp file
                 write_obj.write(obj)
-            # Makes the new scripts executable
-            make_executable(temp_file)
+            make_executable(temp_file) # Makes the new scripts executable
 
 def make_executable(path):
     """ Use: Takes a script as input and makes it executable """
@@ -71,29 +62,78 @@ def directory_setup(prefix,path):
        if not os.path.isdir(dir):
            os.makedirs(dir)
 
+def combine_name_version(config):
+    with open(config, 'r') as config_file:
+        software_name = []
+        software_version = []
+        software = []
+        count = 0
+        for line in config_file:
+            content_check = line.rstrip().split()
+            software_name.append(content_check[0])
+            software_version.append(content_check[1])
+        for item in software_name:
+            X = software_name[count] + "/" + software_version[count]
+            software.append(X)
+            count = count + 1
+        return(software)
+
+def CIRI_quant(sample_data,INpath,OUTpath,config,pipepath):
+    """ Use: Run pipeline on files """
+    script_dir = INpath + "init_CIRIquant.sh"
+    for X in sample_data:
+        read1 = OUTpath + X + "/raw/" + X + "_R1.fastq"
+        read2 = OUTpath + X + "/raw/" + X + "_R2.fastq"
+        subprocess.run([script_dir, X, read1, read2, OUTpath, config])
+    return()
 
 
-
+parser = argparse.ArgumentParser(description='Analyze Sequencing Data for circRNA analysis.')
+parser.add_argument("-p", "--pipeline", help="Absolute path to pipeline folder.")
+parser.add_argument("-o", "--output", help="Absolute path to output folder.")
+parser.add_argument("-l", "--list", help="Absolute path to file list.")
+parser.add_argument("-m", "--mode", help="Current accepted modes are SRA or USER.")
+args = parser.parse_args()
+pipelinepath = args.pipeline
+OUTpath = args.output
+sample_list = args.list
+data_type = args.mode
 
 #Need to assign these
-SRA_mem  = "--mem=24G"
-SRA_time = "--time=24:00:00"
-account = "--account=rrg-zovoilis"
-SRA_run_config = (SRA_time,SRA_mem,account)
+SRA_mem  = "--mem=24G" #Need to find a way to better estimate SRA download speeds
+SRA_time = "--time=24:00:00" #Need to fine a way to better estimate SRA download times
 
-#Need to either assign these from a config file or user needs to edit here
-SRA_toolkit = "StdEnv/2022 gcc/9.3.0 sra-toolkit/3.0.0"
-data_type = "SRA"
-SRApath = "/home/travis/Desktop/Spyder3/"
-SRA_list = SRApath + "temp.list"
+CIRI_mem = "--mem=8G" #Need to change this so it is based off read count measure
+CIRI_time = "--time=12:00:00" #Need to change this so it is based off read count measure
 
-SRA_prefix = sample_prefix_grabber(SRA_list) #Returns array of sample prefix
+account = "--account=rrg-zovoilis" #User Defined
+SRA_run_config = (SRA_time,SRA_mem,account) #Default SRA memory and time reqs
+CIRI_run_config = (CIRI_time,CIRI_mem,account)
 
-prepend_line(SRA_run_config,SRA_prefix,SRA_toolkit,SRApath) #Creates a SRA-download script for every sample prefix
+cedar_config = pipelinepath + "cedar.config"
+CIRI_config = pipelinepath + "CIRI.yaml"
 
-directory_setup(SRA_prefix,SRApath) #Sets up directories
+software = combine_name_version(cedar_config) #Obtains software version information from config.list
+StdEnv = software[0]
+gcc = software[1]
+sra_toolkit = software[2]
+bwa = software[3]
+hisat2 = software[4]
+samtools = software[5]
+stringtie = software[6]
+biocond = software[7]
 
-SRA_download(SRA_prefix, data_type, SRApath) #Submites the various SRA-download scripts to download files
+SRA_software = (StdEnv,gcc,sra_toolkit) #Software needed for SRA-toolkit
+CIRI_software = (bwa,hisat2,samtools,stringtie)
+sample_prefix = sample_prefix_grabber(sample_list) #Returns array of sample prefix
 
-
-
+directory_setup(sample_prefix,OUTpath) #Sets up directories
+if data_type == "SRA":
+    SRApath = pipelinepath + "SRA-download"
+    prepend_line(SRA_run_config,sample_prefix,SRA_software,SRApath,"_SRA_download") #Creates a SRA-download script for every sample prefix
+    SRA_download(sample_prefix, pipelinepath, OUTpath) #Submites the various SRA-download scripts to download files
+elif data_type == "USER":
+    print ("No Data to Download from SRA, starting pipeline.")
+CIRIpath = pipelinepath + "run_CIRIquant"
+prepend_line(CIRI_run_config,sample_prefix,CIRI_software,CIRIpath,"_CIRIquant")
+CIRI_quant(sample_prefix,pipelinepath,OUTpath,CIRI_config,pipelinepath)
