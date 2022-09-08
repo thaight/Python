@@ -1,8 +1,8 @@
 prefix=$1
-outpath=$2
+SRApath=$2
+OUTpath=$3
 
 echo Starting Download of: "$prefix"
-echo fasterq-dump "$prefix" -O "$outpath""$prefix"/raw
-echo Saving File in: "$outpath""$prefix"/raw
-mv "$outpath"SRA-download_"$prefix".sh "$outpath""$prefix"/scripts
-
+echo fasterq-dump "$prefix" -O "$OUTpath""$prefix"/raw
+echo Saving File in: "$OUTpath""$prefix"/raw
+mv "$SRApath"SRA-download_"$prefix".sh "$OUTpath""$prefix"/scripts
