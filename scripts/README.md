@@ -10,6 +10,11 @@ dir.py  #Need to currently change the paths to your files
 
 python dir.py
 
-list_maker.py #Currently runs in the current directory you are in
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+Script: listmaker.py
 
-python list_maker.py
+Use: From the current working directory of the script takes all folders within and creates a list of sub directories
+
+Dependecies: Ensure that python3 is loaded or installed
+
+Example Usage: python listmaker.py
