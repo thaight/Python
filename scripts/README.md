@@ -13,8 +13,13 @@ python dir.py
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 Script: listmaker.py
 
-Use: From the current working directory of the script takes all folders within and creates a list of sub directories
+Use: Takes the absolute path as an argument and creates a list of all files within that subdirectory
 
 Dependecies: Ensure that python3 is loaded or installed
 
-Example Usage: python listmaker.py
+Arguments: -p Absolute path to the folder you are making a list of / -o name of list to be created
+
+Example Usage: python listmaker.py -p /path/ -o sample.list
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
