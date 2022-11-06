@@ -1,0 +1,4 @@
+Update manual for CIRIquant pipeline
+Update CIRIquant to include DE steps
+Update prepDE from stringtie to rename output files
+Update CIRIquant to move files into the correct locations
