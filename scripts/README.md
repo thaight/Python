@@ -17,9 +17,27 @@ Use: Takes the absolute path as an argument and creates a list of all files with
 
 Dependecies: Ensure that python3 is loaded or installed
 
-Arguments: -p Absolute path to the folder you are making a list of / -o name of list to be created
+Arguments:
+-p Absolute path to the folder you are making a list of 
+-o name of list to be created
 
 Example Usage: python listmaker.py -p /path/ -o sample.list
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
+Script: fastq_split.py
+
+Use: Takes a fastq file as input as well as the desired length and splits the fastq file in X length
+
+Dependencies: Ensure that python3 is loaded of installed
+
+Arugments:
+-o Absolute path to file you want the output to go to
+-i Absolute path to the input file (Note: Must be fastq)
+-p Prefix of output files
+-n Length of created files by defult is 1,000,000 (Note: 4 lines per read, therefore if you want 1000 reads you will set -n as 4000)
+
+Example Usage: python3 fastq_split.py -o /path/ -i input.fastq -p sample -n 4000
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
