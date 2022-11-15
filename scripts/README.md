@@ -20,8 +20,10 @@ Dependecies: Ensure that python3 is loaded or installed
 Arguments:
 -p Absolute path to the folder you are making a list of 
 -o name of list to be created
+-g name of gtf file
+-t name of geneout file
 
-Example Usage: python listmaker.py -p /path/ -o sample.list
+Example Usage: python listmaker.py -p /path/ -o sample.list -g sample_gtf.list -t sample_geneout.list
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 Script: fastq_split.py
