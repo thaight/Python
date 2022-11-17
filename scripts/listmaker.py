@@ -4,7 +4,7 @@ import argparse
 
 parser = argparse.ArgumentParser(description='Produces a list to be used for the detection and anlysis of circRNA.')
 parser.add_argument("-i", "--input", help="Absolute path to folder containing sample files. Example: /home/user/data/mouse/")
-parser.add_argument("-o", "--prefix", help="Name of list file to create. Example: test_data.list.")
+parser.add_argument("-p", "--prefix", help="Name of list file to create. Example: test_data.list.")
 args = parser.parse_args()
 path = args.input
 prefix = args.prefix
