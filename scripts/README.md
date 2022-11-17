@@ -26,6 +26,7 @@ Arguments:
 Example Usage: python listmaker.py -i /path -p sample -l /path/sample.list
 Note: Ensure that -i path does not end with a slash or else it breaks the pathing system
 Note: Ensure that -l list does not contain trailing whitespace in the list file
+
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 Script: fastq_split.py
 
