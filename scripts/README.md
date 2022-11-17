@@ -18,12 +18,11 @@ Use: Takes the absolute path as an argument and creates a list of all files with
 Dependecies: Ensure that python3 is loaded or installed
 
 Arguments:
--p Absolute path to the folder you are making a list of 
--o name of list to be created
--g name of gtf file
--t name of geneout file
+-i Absolute path to the folder you are making a list of ensure doesnt end with /
+-p prefix
 
-Example Usage: python listmaker.py -p /path/ -o sample.list -g sample_gtf.list -t sample_geneout.list
+
+Example Usage: python listmaker.py -i /path/ -p sample
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 Script: fastq_split.py
