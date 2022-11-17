@@ -20,9 +20,11 @@ Dependecies: Ensure that python3 is loaded or installed
 Arguments:
 -i Absolute path to the folder you are making a list of ensure doesnt end with /
 -p prefix
+-l Absolute path to list if user wants to define samples, by default searches for all
 
 
-Example Usage: python listmaker.py -i /path/ -p sample
+Example Usage: python listmaker.py -i /path -p sample -l /path/sample.list
+Note: Ensure that -i path does not end with a slash or else it breaks the pathing system
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 Script: fastq_split.py
