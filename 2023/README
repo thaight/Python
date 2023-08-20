@@ -1,1 +1,7 @@
+setup.py
+-i /path/to/folder/containing/files
+
+Usage: Supply a folder that contains all files that are part of the given project, they can be .gz compressed or .fastq and PE/SE are detected
+Note: Run the rename.py script prior to ensure proper naming convention before running setup.py to avoid any issues
+
 
