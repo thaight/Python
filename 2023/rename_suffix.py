@@ -4,6 +4,7 @@
 ''' Date: August 17th, 2023 '''
 ''' Publisher: Travis Haight '''
 import os
+import argparse
 
 def rename_files(directory):
     R1_list = []
@@ -102,9 +103,11 @@ def rename_files(directory):
     return R1_list_mod, R2_list_mod
 
 #Usage
-#Current need to change directory, future versions should allow for variable parsing
-directory = '/home/thaight/projects/rrg-zovoilis/thaight/projects/GHYDA/test_dir'
-list1, list2 = rename_files(directory)
+parser = argparse.ArgumentParser(description='Supply this script with the absolute path to a folder that contains all your sample files. It will rename the files in the proper convention for pipeline use.')
+parser.add_argument('-i', '--input', help='Absolute path to project folder. Ensure that it does not end with "/" for example: /home/test/project1')
+args = parser.parse_args()
+project = args.input
+list1, list2 = rename_files(project)
 print("List 1:", list1)
 print("List 2:", list2)
 
