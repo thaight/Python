@@ -21,9 +21,11 @@ Usage:
 Description:
 Creates a set of empty files within -o that match all files in -i so that sample processing scripts can be tested on the file names without breaking the originals
 
-create_test_files.py
+
+directory_setup.py
 Usage:
 -i 'Absolute path to project folder. Ensure that it does not end with "/" for example: /home/test/project1.'
--o 'Absolute path to the output folder, Ensure that it does not end with "/" for example: /home/test/project1. Note: It does not need to exist.'
 Description:
-Creates a set of empty files within -o that match all files in -i so that sample processing scripts can be tested on the file names without breaking the originals
+For each file in the given directory, first checks if they are .gz compressed and uncompresses if needed. It then sets up the file organization system for downstream and moves the samples in /raw/
+
+
