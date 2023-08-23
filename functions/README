@@ -1,1 +1,3 @@
+rename_files.py
+-i 'Absolute path to project folder. Ensure that it does not end with "/" for example: /home/test/project1.'
 
