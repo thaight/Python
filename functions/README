@@ -1,3 +1,8 @@
 rename_files.py
+Usage:
 -i 'Absolute path to project folder. Ensure that it does not end with "/" for example: /home/test/project1.'
+Description:
+Renames all files within a given project folder to match the following pattern of R1.fastq (R1.fastq.gz). Currently replaces various forms of read identity and replaces fq with fastq for future pipeline work
+Users can adjust what read identities are changed, but ensure to keep the formatting the same as the given examples above
+
 
