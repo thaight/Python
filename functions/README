@@ -5,4 +5,9 @@ Description:
 Renames all files within a given project folder to match the following pattern of R1.fastq (R1.fastq.gz). Currently replaces various forms of read identity and replaces fq with fastq for future pipeline work
 Users can adjust what read identities are changed, but ensure to keep the formatting the same as the given examples above
 
-
+remove_strings.py
+Usage:
+-i 'Absolute path to project folder. Ensure that it does not end with "/" for example: /home/test/project1.'
+-s String to remove from file names
+Description:
+Removes the supplied string from all files within the project folder. Note this can be ran for multiple strings. The use of this script is to make the project files better named in convention for downstream analysis but downstream works without it.
