@@ -20,3 +20,10 @@ Usage:
 -o 'Absolute path to the output folder, Ensure that it does not end with "/" for example: /home/test/project1. Note: It does not need to exist.'
 Description:
 Creates a set of empty files within -o that match all files in -i so that sample processing scripts can be tested on the file names without breaking the originals
+
+create_test_files.py
+Usage:
+-i 'Absolute path to project folder. Ensure that it does not end with "/" for example: /home/test/project1.'
+-o 'Absolute path to the output folder, Ensure that it does not end with "/" for example: /home/test/project1. Note: It does not need to exist.'
+Description:
+Creates a set of empty files within -o that match all files in -i so that sample processing scripts can be tested on the file names without breaking the originals
