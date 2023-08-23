@@ -26,7 +26,7 @@ def uncompress_gz_file(directory, file):
     os.remove(file_path)
     print(f"Removed {file_path}")
 
-def setup(directory):
+def dir_setup(directory):
     ''' This function takes the input directory as input sets up the file system for the pipeline to run off, and returns the mode (PE or SE)'''
     ''' This function requires that all raw files are in the same starting directory '''
     #Check if files are compressed (.gz) and uncompress if needed
@@ -101,7 +101,7 @@ parser = argparse.ArgumentParser(description='Pipeline for the detection and qua
 parser.add_argument('-i', '--input', help='Full path to folder containing the raw files')
 args = parser.parse_args()
 input = args.input
-mode = setup(input)
+mode = dir_setup(input)
 
 
 
