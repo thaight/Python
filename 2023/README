@@ -22,10 +22,27 @@ Description:
 Creates a set of empty files within -o that match all files in -i so that sample processing scripts can be tested on the file names without breaking the originals
 
 
-directory_setup.py
+project_setup.py
 Usage:
 -i 'Absolute path to project folder. Ensure that it does not end with "/" for example: /home/test/project1.'
 Description:
 For each file in the given directory, first checks if they are .gz compressed and uncompresses if needed. It then sets up the file organization system for downstream and moves the samples in /raw/
+Creates .list files that are utilized downstream for DE analysis
+
+get_sequence.py
+Usage:
+-i Absolute path to a file that you are grabbing the sequence from.
+-o Absolute path to a output file.
+-s Start Index that you are grabbing. Note the script accounts for 0 base system so if you want coordinates 1-5 supply 1-5.
+-e End Index that you are grabbing.
+-c Chromosome to search. Example: chr7.
+Description:
+Given a reference file and coordinates this script will return the sequence for a given coordinate pair start:end.
+
+gff3_to_gtf.py
+Usage:
+-i Absolute path to gff3 file. /home/test/test1.gff3
+Description:
+Given a gff3 file it returns a gtf file in the same folder as the gff3 file.
 
 
