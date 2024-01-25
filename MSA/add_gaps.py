@@ -1,11 +1,10 @@
 #!/bin/python3
+#Version 1.0
+#Author: Travis Haight
+
+#Imports
 import argparse
 
-input_file = "/home/thaight/projects/rrg-zovoilis/thaight/projects/snhg14/gene_annotation/subset_locus.csv"
-output_file = "/home/thaight/projects/rrg-zovoilis/thaight/projects/snhg14/gene_annotation/subset_locus_with_gaps.csv"
-
-
-# Define a function to process two lines and insert content between them
 def process_and_insert_lines(line1, line2, count):
     col1 = line1.split(',')
     col2 = line2.split(',')
@@ -23,7 +22,6 @@ def process_and_insert_lines(line1, line2, count):
     new_transcript1 = transcript1 + "," + str(transcript1_count) + "," + col1[3]+ "," + col1[4] + "," + col1[5] + "," + col1[6].strip()
     new_content = ID + "," + str(newtranscript_count) + "," + str(start) + "," + str(end) + "," + str(length) + "," + ensemble
     return new_content, new_transcript1, newtranscript_count
-
 
 #Argument Import
 parser = argparse.ArgumentParser(description='Takes as input a .csv file with 7 columns and adds the gap coordinates between each candidat>
